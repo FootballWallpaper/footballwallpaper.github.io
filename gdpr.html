@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GDPR Compliance – Football Zone</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:   #1565C0;
+      --accent:    #42A5F5;
+      --bg:        #0a0f1e;
+      --surface:   #111827;
+      --card:      #1a2236;
+      --border:    rgba(66,165,245,.18);
+      --text:      #e8edf5;
+      --muted:     #8899aa;
+      --gold:      #FFD700;
+      --green:     #4CAF50;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0d2b0d 0%, #1b5e20 50%, #0a3d0a 100%);
+      padding: 56px 24px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: "🛡️";
+      position: absolute;
+      font-size: 200px;
+      opacity: .05;
+      top: -20px; left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    header .badge {
+      display: inline-block;
+      background: rgba(76,175,80,.15);
+      border: 1px solid rgba(76,175,80,.4);
+      color: #81C784;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+    }
+    header h1 {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    header p { color: rgba(255,255,255,.6); font-size: .95rem; }
+
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    .section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 24px;
+      transition: border-color .25s;
+    }
+    .section:hover { border-color: rgba(66,165,245,.35); }
+
+    .section-icon {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, rgba(27,94,32,.3), rgba(76,175,80,.2));
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 14px;
+    }
+    .section h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #81C784;
+      margin-bottom: 12px;
+    }
+    .section p, .section li {
+      color: var(--muted);
+      font-size: .93rem;
+      margin-bottom: 8px;
+    }
+    .section ul { padding-left: 20px; }
+    .section ul li { list-style: disc; margin-bottom: 6px; }
+    .section a { color: var(--accent); text-decoration: none; }
+    .section a:hover { text-decoration: underline; }
+
+    /* Rights grid */
+    .rights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+    .right-card {
+      background: rgba(76,175,80,.07);
+      border: 1px solid rgba(76,175,80,.2);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .right-card .icon { font-size: 1.5rem; margin-bottom: 8px; }
+    .right-card h4 { color: #a5d6a7; font-size: .9rem; font-weight: 700; margin-bottom: 4px; }
+    .right-card p { color: var(--muted); font-size: .82rem; margin: 0; }
+
+    .highlight {
+      background: linear-gradient(135deg, rgba(27,94,32,.15), rgba(76,175,80,.08));
+      border-left: 3px solid #4CAF50;
+      border-radius: 0 10px 10px 0;
+      padding: 16px 20px;
+      margin: 16px 0;
+      color: #a5d6a7;
+      font-size: .9rem;
+    }
+
+    .lawful-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: .88rem;
+    }
+    .lawful-table th {
+      background: rgba(76,175,80,.12);
+      color: #a5d6a7;
+      text-align: left;
+      padding: 10px 14px;
+      font-weight: 600;
+    }
+    .lawful-table td {
+      padding: 10px 14px;
+      color: var(--muted);
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    .lawful-table tr:hover td { background: rgba(255,255,255,.02); }
+
+    .contact-card {
+      background: linear-gradient(135deg, rgba(27,94,32,.2), rgba(76,175,80,.1));
+      border: 1px solid rgba(76,175,80,.3);
+      border-radius: 16px;
+      padding: 28px 32px;
+      text-align: center;
+    }
+    .contact-card h3 { color: #fff; margin-bottom: 8px; font-size: 1.05rem; }
+    .contact-card p { color: var(--muted); font-size: .9rem; margin-bottom: 14px; }
+    .contact-card a.btn {
+      display: inline-block;
+      background: #2e7d32;
+      color: #fff;
+      padding: 10px 28px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: .9rem;
+      text-decoration: none;
+      transition: background .2s;
+    }
+    .contact-card a.btn:hover { background: #4CAF50; }
+
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 24px;
+      color: var(--muted);
+      font-size: .82rem;
+    }
+    footer strong { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="badge">EU Regulation 2016/679</div>
+  <h1>GDPR Compliance</h1>
+  <p>Last updated: April 7, 2026 &nbsp;·&nbsp; Football Zone by DovDovDev</p>
+</header>
+
+<div class="container">
+
+  <div class="section">
+    <div class="section-icon">📜</div>
+    <h2>What is GDPR?</h2>
+    <p>
+      The General Data Protection Regulation (GDPR) is a European Union regulation that came into effect
+      on May 25, 2018. It gives EU/EEA residents greater control over their personal data and sets out
+      strict rules for how organisations collect, store, and process personal data.
+    </p>
+    <div class="highlight">
+      Football Zone is committed to GDPR compliance. This page explains how we handle the data of
+      EU/EEA users in accordance with the regulation.
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-icon">🏢</div>
+    <h2>Data Controller</h2>
+    <p>The data controller responsible for your personal data is:</p>
+    <ul>
+      <li><strong>Company:</strong> DovDovDev</li>
+      <li><strong>App:</strong> Football Zone</li>
+      <li><strong>Contact:</strong> <a href="mailto:support@dovdovdev.com">support@dovdovdev.com</a></li>
+      <li><strong>Website:</strong> <a href="https://www.dovdovdev.com" target="_blank">www.dovdovdev.com</a></li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-icon">⚖️</div>
+    <h2>Lawful Basis for Processing</h2>
+    <p>Under GDPR, we must have a lawful basis for processing your personal data. The following table outlines our processing activities:</p>
+    <table class="lawful-table">
+      <thead>
+        <tr>
+          <th>Processing Activity</th>
+          <th>Lawful Basis</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Displaying advertisements (AdMob)</td>
+          <td>Consent (you can opt out)</td>
+        </tr>
+        <tr>
+          <td>Processing Premium subscription</td>
+          <td>Contract performance</td>
+        </tr>
+        <tr>
+          <td>App analytics & crash reporting</td>
+          <td>Legitimate interest</td>
+        </tr>
+        <tr>
+          <td>Local app data (favorites, settings)</td>
+          <td>Contract performance / Legitimate interest</td>
+        </tr>
+        <tr>
+          <td>Daily notifications (optional)</td>
+          <td>Consent (you enable/disable in Settings)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-icon">📦</div>
+    <h2>Data We Process</h2>
+    <ul>
+      <li><strong>Advertising Identifier (GAID)</strong> — used by Google AdMob for ad personalization.</li>
+      <li><strong>Device information</strong> — device model, OS version for compatibility purposes.</li>
+      <li><strong>Subscription status</strong> — whether you have an active Premium subscription (via Google Play).</li>
+      <li><strong>App interaction data</strong> — wallpapers liked, downloaded, and set (stored locally).</li>
+    </ul>
+    <p>
+      We do <strong>not</strong> process sensitive personal data (health data, biometric data, etc.)
+      and we do <strong>not</strong> build user profiles for sale to third parties.
+    </p>
+  </div>
+
+  <div class="section">
+    <div class="section-icon">🌍</div>
+    <h2>International Data Transfers</h2>
+    <p>
+      Some data may be processed outside the EU/EEA (e.g., by Google AdMob servers in the United States).
+      These transfers are protected by:
+    </p>
+    <ul>
+      <li>Google's compliance with the EU-U.S. Data Privacy Framework.</li>
+      <li>Standard Contractual Clauses (SCCs) approved by the European Commission.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-icon">🛡️</div>
+    <h2>Your GDPR Rights</h2>
+    <p>As an EU/EEA resident, you have the following rights under GDPR:</p>
+    <div class="rights-grid">
+      <div class="right-card">
+        <div class="icon">👁️</div>
+        <h4>Right of Access</h4>
+        <p>Request a copy of the personal data we hold about you.</p>
+      </div>
+      <div class="right-card">
+        <div class="icon">✏️</div>
+        <h4>Right to Rectification</h4>
+        <p>Request correction of inaccurate or incomplete data.</p>
+      </div>
+      <div class="right-card">
+        <div class="icon">🗑️</div>
+        <h4>Right to Erasure</h4>
+        <p>Request deletion of your personal data ("right to be forgotten").</p>
+      </div>
+      <div class="right-card">
+        <div class="icon">⏸️</div>
+        <h4>Right to Restriction</h4>
+        <p>Request that we restrict processing of your data.</p>
+      </div>
+      <div class="right-card">
+        <div class="icon">📤</div>
+        <h4>Right to Portability</h4>
+        <p>Receive your data in a structured, machine-readable format.</p>
+      </div>
+      <div class="right-card">
+        <div class="icon">🚫</div>
+        <h4>Right to Object</h4>
+        <p>Object to processing based on legitimate interests or direct marketing.</p>
+      </div>
+      <div class="right-card">
+        <div class="icon">↩️</div>
+        <h4>Withdraw Consent</h4>
+        <p>Withdraw consent at any time (e.g., disable ad personalization).</p>
+      </div>
+      <div class="right-card">
+        <div class="icon">⚖️</div>
+        <h4>Lodge a Complaint</h4>
+        <p>File a complaint with your national data protection authority (DPA).</p>
+      </div>
+    </div>
+    <p style="margin-top:16px">
+      To exercise any of these rights, please email us at
+      <a href="mailto:support@dovdovdev.com">support@dovdovdev.com</a>.
+      We will respond within <strong>30 days</strong>.
+    </p>
+  </div>
+
+  <div class="section">
+    <div class="section-icon">🍪</div>
+    <h2>Consent for Personalized Ads</h2>
+    <p>
+      When you first launch Football Zone, we request your consent for personalized advertising
+      through Google's User Messaging Platform (UMP). You can change your consent preferences at any time:
+    </p>
+    <ul>
+      <li>In your Android device settings: <strong>Settings → Google → Ads</strong></li>
+      <li>By contacting us to withdraw consent</li>
+    </ul>
+    <p>
+      If you decline personalized ads, you will still see ads, but they will not be tailored to your interests.
+    </p>
+  </div>
+
+  <div class="section">
+    <div class="section-icon">📅</div>
+    <h2>Data Retention</h2>
+    <ul>
+      <li><strong>Local data</strong> (favorites, collections, settings) — retained until you uninstall the app or clear app data.</li>
+      <li><strong>Advertising data</strong> — retained per Google AdMob's retention policy (typically up to 2 years).</li>
+      <li><strong>Subscription data</strong> — retained for the duration of your subscription and as required by Google Play.</li>
+    </ul>
+  </div>
+
+  <div class="contact-card">
+    <h3>Exercise Your Rights</h3>
+    <p>Contact our Data Protection contact point for any GDPR-related requests.</p>
+    <a href="mailto:support@dovdovdev.com?subject=GDPR Request" class="btn">Send GDPR Request</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2026 <strong>DovDovDev</strong> · Football Zone · All rights reserved</p>
+  <p style="margin-top:6px">
+    <a href="/privacy" style="color:#42A5F5;text-decoration:none">Privacy</a> &nbsp;·&nbsp;
+    <a href="/gdpr" style="color:#42A5F5;text-decoration:none">GDPR</a> &nbsp;·&nbsp;
+    <a href="/dmca" style="color:#42A5F5;text-decoration:none">DMCA</a>
+  </p>
+</footer>
+
+</body>
+</html>
